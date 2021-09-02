@@ -10,8 +10,7 @@ getCurrentCycleEvent = async () => {
   for await (const CycleDayEvent of Object.values(Calendar)) {
 
     //If statement to find the one CycleDayEvent that corresponds to Today's Date. Ignores time
-    if (CycleDayEvent.start.toISOString().split("T").slice(0, -1)[0] === Today.toISOString().split("T").slice(0, -1)[0]) {
-
+    if (CycleDayEvent.start.toString().slice(0, 15) === Today.toString().slice(0, 15)) {
       //Once found a match, return CycleDayEvent back to the APIv2.js file
       return CycleDayEvent
     }
