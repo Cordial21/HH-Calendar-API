@@ -1,0 +1,23 @@
+{
+  "name": "hh-calendar-api",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cordial21/HH-Calendar-API.git"
+  },
+  "author": "Eshan Salimi",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Cordial21/HH-Calendar-API/issues"
+  },
+  "homepage": "https://github.com/Cordial21/HH-Calendar-API#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-ical": "^0.13.0"
+  }
+}
