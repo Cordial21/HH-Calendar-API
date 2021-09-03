@@ -2,7 +2,7 @@
 const ical = require("node-ical");
 const config = require("../util/config.js")
 
-getCurrentCycleEvent = async () => {
+const getCurrentCycleEvent = async () => {
   const Calendar = await ical.async.fromURL("https://calendar.google.com/calendar/ical/hollandhall.org_rqggarpb66eqmgm80dg7n8atqg%40group.calendar.google.com/public/basic.ics");
   const Today = await new Date()
 
@@ -10,17 +10,16 @@ getCurrentCycleEvent = async () => {
   for await (const CycleDayEvent of Object.values(Calendar)) {
 
     //If statement to find the one CycleDayEvent that corresponds to Today's Date. Ignores time
-    if (CycleDayEvent.start.toISOString().split("T").slice(0, -1)[0] === Today.toISOString().split("T").slice(0, -1)[0]) {
-
+    if (CycleDayEvent.start.toString().slice(0, 15) === Today.toString().slice(0, 15)) {
       //Once found a match, return CycleDayEvent back to the APIv2.js file
       return CycleDayEvent
     }
   }
 }
 
-getRemainingClasses = async () => {
+const getRemainingClasses = async () => {
   const Calendar = await ical.async.fromURL(config.personalCalendar)
-  const CurrentDateTime = await new Date()
+  const CurrentDateTime = await new Date();
 
   //Create an array to store all Classes
   const ClassArray = []
@@ -46,9 +45,19 @@ getRemainingClasses = async () => {
 }
 
 
+//Extra function to convert UTC time to local time
+const UTCtoLocalTime = (datetime) => {
+  const formattedDate = new Date(datetime.getTime() + datetime.getTimezoneOffset() *60 * 1000);
+        const offset = datetime.getTimezoneOffset() / 60;
+        const hours = datetime.getHours();
+        formattedDate.setHours(hours - offset);
+        return formattedDate
+}
+
 
 //Exports all functions
 module.exports = {
   getCurrentCycleEvent,
-  getRemainingClasses
+  getRemainingClasses,
+  UTCtoLocalTime
 }
