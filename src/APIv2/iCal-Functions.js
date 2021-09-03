@@ -2,7 +2,7 @@
 const ical = require("node-ical");
 const config = require("../util/config.js")
 
-getCurrentCycleEvent = async () => {
+const getCurrentCycleEvent = async () => {
   const Calendar = await ical.async.fromURL("https://calendar.google.com/calendar/ical/hollandhall.org_rqggarpb66eqmgm80dg7n8atqg%40group.calendar.google.com/public/basic.ics");
   const Today = await new Date()
 
@@ -17,9 +17,9 @@ getCurrentCycleEvent = async () => {
   }
 }
 
-getRemainingClasses = async () => {
+const getRemainingClasses = async () => {
   const Calendar = await ical.async.fromURL(config.personalCalendar)
-  const CurrentDateTime = await new Date()
+  const CurrentDateTime = await new Date();
 
   //Create an array to store all Classes
   const ClassArray = []
@@ -45,9 +45,19 @@ getRemainingClasses = async () => {
 }
 
 
+//Extra function to convert UTC time to local time
+const UTCtoLocalTime = (datetime) => {
+  const formattedDate = new Date(datetime.getTime() + datetime.getTimezoneOffset() *60 * 1000);
+        const offset = datetime.getTimezoneOffset() / 60;
+        const hours = datetime.getHours();
+        formattedDate.setHours(hours - offset);
+        return formattedDate
+}
+
 
 //Exports all functions
 module.exports = {
   getCurrentCycleEvent,
-  getRemainingClasses
+  getRemainingClasses,
+  UTCtoLocalTime
 }

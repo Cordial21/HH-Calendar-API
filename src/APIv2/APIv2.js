@@ -44,8 +44,10 @@ const getRemainingClasses = async () => {
     const allRemainingClasses = []
 
     //For each ClassEvent in Classes, format the ClassEvent into a Period, and add that Period into the allRemainingClasses array
-    for await (const ClassEvent of Classes) {
-        const Class = new Period(ClassEvent.summary, ClassEvent.start.toLocaleString(), ClassEvent.end.toLocaleString, ClassEvent.location)
+    for await (let ClassEvent of Classes) {
+        ClassEvent.start = await iCalFunctions.UTCtoLocalTime(ClassEvent.start);
+        ClassEvent.end = await iCalFunctions.UTCtoLocalTime(ClassEvent.end);
+        const Class = new Period(ClassEvent.summary, ClassEvent.start, ClassEvent.end, ClassEvent.location)
         allRemainingClasses.push(Class)
     }
     //Once finished, return allRemainingClasses
