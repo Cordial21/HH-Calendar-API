@@ -1,7 +1,4 @@
-const personalCalendar = "ENTER iCal Link Here";
-const port = 3000
-
-module.exports = {
-    personalCalendar,
-    port
+module.exports = config = {
+    personalCalendar: "ENTER iCal Link Here",
+    port: 3000
 }

@@ -1,9 +1,6 @@
 const express = require("express");
 const APIv2_router = express.Router();
 
-/*
-Known Issue #1: UTC Time
-*/
 
 
 //Placeholder for authentication check
@@ -33,7 +30,10 @@ const getCycleDay = async () => {
     const CycleEvent = await iCalFunctions.getCurrentCycleEvent()
 
     //Return the CycleDayEvent formatted as a CycleDay
-    return new CycleDay(CycleEvent.summary, CycleEvent.start.toISOString().split("T").slice(0, -1)[0])
+    if (CycleEvent) {
+        return new CycleDay(CycleEvent.summary, CycleEvent.start.toISOString().split("T").slice(0, -1)[0])
+    }
+    return null
 };
 
 
